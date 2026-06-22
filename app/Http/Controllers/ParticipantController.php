@@ -202,7 +202,8 @@ class ParticipantController extends Controller
         }
 
         $registrations = $query->get()->sortByDesc(function ($registration) {
-            return $registration->event->date;
+            // A deleted event must not turn the ticket page into a 500 response.
+            return $registration->event?->date;
         });
 
         $tabs = ['Semua', 'Akan Datang', 'Selesai', 'Dibatalkan'];

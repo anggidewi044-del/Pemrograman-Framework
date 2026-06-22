@@ -17,4 +17,22 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_assets_use_https_behind_a_trusted_proxy(): void
+    {
+        $response = $this
+            ->withServerVariables(['REMOTE_ADDR' => '10.0.0.1'])
+            ->withHeaders([
+                'X-Forwarded-Host' => 'eventrize-production.up.railway.app',
+                'X-Forwarded-Proto' => 'https',
+                'X-Forwarded-Port' => '443',
+            ])
+            ->get('/');
+
+        $response->assertOk();
+        $response->assertSee(
+            'https://eventrize-production.up.railway.app/css/landing.css',
+            escape: false,
+        );
+    }
 }
