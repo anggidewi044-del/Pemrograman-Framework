@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Registration;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Railway terminates HTTPS at its edge. Force generated links to retain
+        // HTTPS even when the internal request reaches PHP over plain HTTP.
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         View::composer('participant.*', function ($view) {
             $notifications = collect();
 
