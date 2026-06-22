@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Registration;
+use App\Services\MediaStorage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +15,10 @@ use App\Models\User;
 
 class OrganizerController extends Controller
 {
+    public function __construct(private readonly MediaStorage $mediaStorage)
+    {
+    }
+
     private function ownedEvent(int $id, array $with = []): Event
     {
         return Event::with($with)
@@ -307,7 +311,7 @@ class OrganizerController extends Controller
         ]);
 
         if ($request->hasFile('flyer')) {
-            $data['flyer_path'] = $request->file('flyer')->store('flyers', 'public');
+            $data['flyer_path'] = $this->mediaStorage->store($request->file('flyer'), 'flyers');
         }
         unset($data['flyer']);
 
@@ -321,7 +325,7 @@ class OrganizerController extends Controller
                 return back()->with('error', 'Hanya event berstatus Draft yang dapat diedit.');
             }
             if (!empty($data['flyer_path']) && $event->flyer_path) {
-                Storage::disk('public')->delete($event->flyer_path);
+                $this->mediaStorage->delete($event->flyer_path);
             }
             $data['status'] = 'draft';
             $event->update($data);
@@ -620,12 +624,12 @@ class OrganizerController extends Controller
         ]);
 
         if ($event->certificate_template_path) {
-            Storage::disk('public')->delete($event->certificate_template_path);
+            $this->mediaStorage->delete($event->certificate_template_path);
         }
 
         $file = $request->file('certificate_template');
         $event->update([
-            'certificate_template_path' => $file->store('certificate_templates', 'public'),
+            'certificate_template_path' => $this->mediaStorage->store($file, 'certificate_templates'),
             'certificate_template_name' => $file->getClientOriginalName(),
             'certificate_generated_at' => null,
             'certificate_name_y' => $request->integer('certificate_name_y'),
@@ -673,7 +677,7 @@ class OrganizerController extends Controller
             return back()->with('error', 'Hanya event Draft yang dapat dihapus.');
         }
         if ($event->flyer_path) {
-            Storage::disk('public')->delete($event->flyer_path);
+            $this->mediaStorage->delete($event->flyer_path);
         }
         $event->delete();
 

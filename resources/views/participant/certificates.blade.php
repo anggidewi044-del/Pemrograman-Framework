@@ -77,7 +77,7 @@
                 <div class="certificate-row-image">
                     @if($event->flyer_path)
                         <img
-                            src="{{ asset('storage/' . $event->flyer_path) }}"
+                            src="{{ $event->flyer_url }}"
                             alt="{{ $event->title }}"
                         >
                     @elseif($event->image)
@@ -189,7 +189,7 @@
                         <h2 class="certificate-dialog-title">Sertifikat</h2>
                         <div class="certificate-inline-preview">
                             <div class="participant-template-preview">
-                                <img src="{{ asset('storage/' . $event->certificate_template_path) }}" alt="Sertifikat {{ $event->title }}">
+                                <img src="{{ $event->certificate_template_url }}" alt="Sertifikat {{ $event->title }}">
                                 <strong style="top:{{ $event->certificate_name_y ?? 47 }}%;font-size:clamp(14px, {{ max(14, round(($event->certificate_name_size ?? 42) * .52)) }}px, 36px);color:{{ $event->certificate_name_color ?? '#1e293b' }}">{{ $registration->name }}</strong>
                             </div>
                         </div>

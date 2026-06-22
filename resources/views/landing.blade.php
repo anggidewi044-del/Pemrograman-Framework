@@ -62,7 +62,7 @@
             <div class="event-grid">
                 @forelse($events as $event)
                     <article class="event-card {{ $loop->first ? 'event-card-dark' : 'event-card-blue' }}">
-                        <div class="event-top" @if($event->flyer_path) style="background:linear-gradient(rgba(8,30,54,.78),rgba(8,30,54,.92)),url('{{ asset('storage/'.$event->flyer_path) }}') center/cover" @endif>
+                        <div class="event-top" @if($event->flyer_path) style="background:linear-gradient(rgba(8,30,54,.78),rgba(8,30,54,.92)),url('{{ $event->flyer_url }}') center/cover" @endif>
                             <span class="event-badge">{{ $event->category ?? ucfirst($event->event_type) }}</span>
                             <h3>{{ $event->title }}</h3>
                             <div class="event-meta-info">

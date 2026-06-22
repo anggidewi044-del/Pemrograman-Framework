@@ -18,7 +18,7 @@
         <div class="certificate-preview">
             @if($registration->event->certificate_template_path)
             <div class="participant-template-preview">
-                <img src="{{ asset('storage/' . $registration->event->certificate_template_path) }}" alt="Sertifikat {{ $registration->event->title }}">
+                <img src="{{ $registration->event->certificate_template_url }}" alt="Sertifikat {{ $registration->event->title }}">
                 <strong style="top:{{ $registration->event->certificate_name_y ?? 47 }}%;font-size:clamp(18px, {{ max(18, round(($registration->event->certificate_name_size ?? 42) * .7)) }}px, 48px);color:{{ $registration->event->certificate_name_color ?? '#1e293b' }}">{{ $registration->name }}</strong>
             </div>
             @else

@@ -143,7 +143,7 @@
                                     <button type="button" class="btn-action-reject" onclick="openRejectModal({{ $registration->id }})">Tolak</button>
                                 @elseif($tab === 'Menunggu Verifikasi Pembayaran' && $event->price > 0 && $registration->status === 'menunggu_verifikasi_pembayaran')
                                     @if($registration->payment_proof_path)
-                                        <a href="{{ asset('storage/' . $registration->payment_proof_path) }}" target="_blank" rel="noopener" class="btn-proof-payment">Lihat Bukti Pembayaran</a>
+                                        <a href="{{ $registration->payment_proof_url }}" target="_blank" rel="noopener" class="btn-proof-payment">Lihat Bukti Pembayaran</a>
                                     @endif
                                     <form action="{{ route('organizer.registrations.verify-payment', $registration->id) }}" method="POST" class="inline-form">
                                         @csrf

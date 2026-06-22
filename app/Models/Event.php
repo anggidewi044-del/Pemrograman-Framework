@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Registration;
 use Illuminate\Support\Carbon;
+use App\Services\MediaStorage;
 
 /**
  * @property int $id
@@ -97,6 +98,16 @@ class Event extends Model
     public function getRemainingQuotaAttribute(): int
     {
         return max(0, $this->quota_max - $this->quota_used);
+    }
+
+    public function getFlyerUrlAttribute(): ?string
+    {
+        return app(MediaStorage::class)->url($this->flyer_path);
+    }
+
+    public function getCertificateTemplateUrlAttribute(): ?string
+    {
+        return app(MediaStorage::class)->url($this->certificate_template_path);
     }
 
     public function getFormattedPriceAttribute(): string

@@ -203,7 +203,7 @@
                                     <div class="stripe-indicator"></div>
                                     <div class="upcoming-img">
                                         @if($event->flyer_path)
-                                            <div class="avatar-event-bg" style="background-image: url('{{ asset('storage/' . $event->flyer_path) }}'); background-size: cover; background-position: center;"></div>
+                                            <div class="avatar-event-bg" style="background-image: url('{{ $event->flyer_url }}'); background-size: cover; background-position: center;"></div>
                                         @elseif($event->image)
                                             <div class="avatar-event-bg img-{{ $event->image }}"></div>
                                         @else
@@ -284,11 +284,11 @@
                              data-description="{{ $event->description }}" data-materi="{{ $event->materi }}"
                              data-quota_max="{{ $event->quota_max }}" data-quota_used="{{ $event->quota_used }}"
                              data-price="{{ $event->price }}" data-contact_phone="{{ $event->contact_phone }}"
-                             data-image="{{ $event->image }}" data-flyer-url="{{ $event->flyer_path ? asset('storage/' . $event->flyer_path) : '' }}">
+                             data-image="{{ $event->image }}" data-flyer-url="{{ $event->flyer_url ?? '' }}">
                             
                             <div class="card-thumbnail">
                                 @if($event->flyer_path)
-                                    <div class="thumbnail-bg" style="background-image:url('{{ asset('storage/' . $event->flyer_path) }}'); background-size:cover; background-position:center;"></div>
+                                    <div class="thumbnail-bg" style="background-image:url('{{ $event->flyer_url }}'); background-size:cover; background-position:center;"></div>
                                 @elseif($event->image)
                                     <div class="thumbnail-bg img-{{ $event->image }}"></div>
                                 @else
@@ -374,7 +374,7 @@
                         <div class="event-row-card">
                             <div class="card-thumbnail">
                                 @if($event->flyer_path)
-                                    <div class="thumbnail-bg" style="background-image:url('{{ asset('storage/' . $event->flyer_path) }}'); background-size:cover; background-position:center;"></div>
+                                    <div class="thumbnail-bg" style="background-image:url('{{ $event->flyer_url }}'); background-size:cover; background-position:center;"></div>
                                 @elseif($event->image)
                                     <div class="thumbnail-bg img-{{ $event->image }}"></div>
                                 @else
@@ -416,7 +416,7 @@
                         @forelse($events->where('status', 'selesai') as $event)
                             <article class="analytics-event-card">
                                 <div class="analytics-card-image">
-                                    @if($event->flyer_path)<img src="{{ asset('storage/' . $event->flyer_path) }}" alt="{{ $event->title }}">@else<div class="placeholder-gradient"></div>@endif
+                                    @if($event->flyer_path)<img src="{{ $event->flyer_url }}" alt="{{ $event->title }}">@else<div class="placeholder-gradient"></div>@endif
                                 </div>
                                 <div class="analytics-card-body">
                                     <h3>{{ $event->title }}</h3>
@@ -528,7 +528,7 @@
                                 <article class="analytics-event-card certificate-event-card">
                                     <div class="analytics-card-image">
                                         @if($certificateEvent->flyer_path)
-                                            <img src="{{ asset('storage/' . $certificateEvent->flyer_path) }}" alt="{{ $certificateEvent->title }}">
+                                            <img src="{{ $certificateEvent->flyer_url }}" alt="{{ $certificateEvent->title }}">
                                         @else
                                             <div class="placeholder-gradient"></div>
                                         @endif
@@ -573,7 +573,7 @@
                                 <h3>1. Upload Template</h3>
                                 @if($selectedCertificateEvent->certificate_template_path)
                                     <div class="certificate-position-preview">
-                                        <img id="certificate-live-preview-image" src="{{ asset('storage/' . $selectedCertificateEvent->certificate_template_path) }}" alt="Template sertifikat">
+                                        <img id="certificate-live-preview-image" src="{{ $selectedCertificateEvent->certificate_template_url }}" alt="Template sertifikat">
                                         <strong id="certificate-preview-name" style="top:{{ $selectedCertificateEvent->certificate_name_y ?? 47 }}%;font-size:{{ max(12, round(($selectedCertificateEvent->certificate_name_size ?? 42) * .48)) }}px;color:{{ $selectedCertificateEvent->certificate_name_color ?? '#1e293b' }}">Nama Peserta</strong>
                                     </div>
                                     <p>{{ $selectedCertificateEvent->certificate_template_name }}</p>

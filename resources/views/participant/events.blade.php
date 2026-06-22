@@ -70,7 +70,7 @@
                         <div class="event-image">
                             @if($event->flyer_path)
                                 <img
-                                    src="{{ asset('storage/' . $event->flyer_path) }}"
+                                    src="{{ $event->flyer_url }}"
                                     alt="{{ $event->title }}"
                                 >
                             @elseif($event->image)

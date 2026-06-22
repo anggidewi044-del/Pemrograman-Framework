@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Event;
 use App\Models\Registration;
 use App\Models\EventFeedback;
+use App\Services\MediaStorage;
 
 class ParticipantController extends Controller
 {
+    public function __construct(private readonly MediaStorage $mediaStorage)
+    {
+    }
+
     protected function requireParticipant()
     {
         if (!Auth::check()) {
@@ -127,9 +131,9 @@ class ParticipantController extends Controller
 
             if ($isPaid && $request->hasFile('payment_proof')) {
                 if ($existing->payment_proof_path) {
-                    Storage::disk('public')->delete($existing->payment_proof_path);
+                    $this->mediaStorage->delete($existing->payment_proof_path);
                 }
-                $existing->payment_proof_path = $request->file('payment_proof')->store('payment_proofs', 'public');
+                $existing->payment_proof_path = $this->mediaStorage->store($request->file('payment_proof'), 'payment_proofs');
                 $existing->payment_amount = $event->price;
                 $existing->status = 'menunggu_verifikasi_pembayaran';
                 $existing->rejection_reason = null;
@@ -153,7 +157,7 @@ class ParticipantController extends Controller
         ];
 
         if ($isPaid && $request->hasFile('payment_proof')) {
-            $registrationData['payment_proof_path'] = $request->file('payment_proof')->store('payment_proofs', 'public');
+            $registrationData['payment_proof_path'] = $this->mediaStorage->store($request->file('payment_proof'), 'payment_proofs');
             $registrationData['payment_amount'] = $event->price;
         }
 

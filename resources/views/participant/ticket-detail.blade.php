@@ -17,7 +17,7 @@
     <div class="ticket-detail-left">
         <div class="ticket-event-image">
             @if($registration->event->flyer_path)
-                <img src="{{ asset('storage/' . $registration->event->flyer_path) }}" alt="{{ $registration->event->title }}">
+                <img src="{{ $registration->event->flyer_url }}" alt="{{ $registration->event->title }}">
             @elseif($registration->event->image)
                 <div class="event-image-bg img-{{ $registration->event->image }}"></div>
             @else

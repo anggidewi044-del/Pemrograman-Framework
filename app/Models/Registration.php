@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\MediaStorage;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -61,6 +62,11 @@ class Registration extends Model
     public function scopeConfirmed($query)
     {
         return $query->whereIn('status', ['terdaftar', 'hadir']);
+    }
+
+    public function getPaymentProofUrlAttribute(): ?string
+    {
+        return app(MediaStorage::class)->url($this->payment_proof_path);
     }
 
     public function scopePending($query)
