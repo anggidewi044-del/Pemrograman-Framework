@@ -35,4 +35,17 @@ class ExampleTest extends TestCase
             escape: false,
         );
     }
+
+    public function test_railway_domain_forces_https_without_forwarded_proto(): void
+    {
+        $response = $this->get(
+            'http://eventrize-production.up.railway.app/',
+        );
+
+        $response->assertOk();
+        $response->assertSee(
+            'https://eventrize-production.up.railway.app/css/landing.css',
+            escape: false,
+        );
+    }
 }

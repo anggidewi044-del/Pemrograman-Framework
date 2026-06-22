@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Railway terminates TLS before forwarding the request to Laravel.
         // Trust its forwarding headers so URL helpers keep the original HTTPS scheme.
         $middleware->trustProxies(at: '*');
+        $middleware->prepend(\App\Http\Middleware\ForceHttpsScheme::class);
 
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureUserHasRole::class,
