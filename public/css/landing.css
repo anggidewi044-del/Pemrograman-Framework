@@ -29,6 +29,11 @@ body {
     color: var(--navy-dark);
     font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     line-height: 1.5;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
 }
 
 a {
@@ -609,6 +614,9 @@ a {
     .site-header {
         padding: 20px 40px;
     }
+    .site-header.scrolled {
+        padding: 16px 40px;
+    }
     .main-nav {
         gap: 20px;
     }
@@ -651,37 +659,93 @@ a {
     .site-header {
         padding: 16px 20px;
     }
+    .site-header.scrolled {
+        padding: 12px 20px;
+    }
     .brand {
-        font-size: 20px;
+        gap: 8px;
+        font-size: 17px;
+    }
+    .brand-logo {
+        width: 38px;
+        height: 38px;
+    }
+    .login-button {
+        min-height: 42px;
+        padding: 10px 16px;
+        font-size: 14px;
     }
     .hero-section {
-        position: relative;
-        padding: 100px 20px 40px;
-        min-height: 100vh;
+        padding: 104px 20px 48px;
+        min-height: auto;
+        gap: 36px;
         text-align: left;
     }
     .poster-card-container {
-        position: absolute;
-        top: 120px;
-        right: -12px;
-        width: 82vw;
-        justify-content: flex-end;
+        position: relative;
+        inset: auto;
+        width: 100%;
+        justify-content: center;
         transform: none;
     }
     .hero-poster {
-        width: min(78vw, 265px);
+        width: min(88vw, 360px);
+        transform: rotate(2deg);
     }
     .hero-content h1 {
-        font-size: 36px;
+        margin-bottom: 18px;
+        font-size: clamp(32px, 10vw, 42px);
+        overflow-wrap: anywhere;
+    }
+    .hero-description {
+        margin-bottom: 24px;
+        font-size: 16px;
+    }
+    .primary-button {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 20px;
+        text-align: center;
     }
     .events-section,
     .testimonials-section,
     .site-footer {
         padding: 40px 20px;
     }
+    .section-heading-container {
+        align-items: flex-start;
+        margin-bottom: 30px;
+    }
+    .section-heading {
+        text-align: left;
+    }
+    .section-heading h2,
+    .section-title {
+        font-size: 30px;
+        line-height: 1.2;
+    }
+    .section-heading p {
+        font-size: 16px;
+    }
+    .view-all {
+        align-self: flex-start;
+    }
     .event-grid,
     .testimonials-grid {
         grid-template-columns: 1fr;
+    }
+    .event-top,
+    .event-bottom,
+    .testimonial-card {
+        padding: 24px;
+    }
+    .event-card h3 {
+        font-size: 24px;
+        overflow-wrap: anywhere;
+    }
+    .event-detail,
+    .contact-item {
+        overflow-wrap: anywhere;
     }
     .footer-container {
         grid-template-columns: 1fr;
